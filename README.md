@@ -22,5 +22,17 @@ Follow the steps below to run this project on your own computer.
 
 ### 1. Download or clone the repository
 
-```bash
 git clone https://github.com/Klara1205/NHANES-project.git# NHANES-project
+
+### 2. install.packages(c("tidyverse", "NHANES", "shiny", "ggplot2", "modelr"))
+
+### 3. Run QMD file
+
+after reading nhanes_cleaning.qmd you will have a nhane_clean.rds for app running
+
+---
+
+## URL of the deployed app
+
+https://yqsj04-xianxian-chen.shinyapps.io/12-25/
+

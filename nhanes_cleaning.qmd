@@ -1,0 +1,56 @@
+---
+title: "nhanes_cleaning"
+format: pdf
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(NHANES)
+```
+
+```{r}
+#cleaning NHANES dataset
+nhanes_clean <- NHANES |>
+  filter(Age >= 18) |>
+  filter(
+    !is.na(SleepHrsNight),
+    !is.na(BMI),
+    !is.na(Depressed)
+  ) |>
+  
+  mutate(
+    Depressed = as.numeric(Depressed),
+    Obese = BMI >= 30,
+    
+    SleepCat = case_when(
+      SleepHrsNight < 7  ~ "<7",
+      SleepHrsNight <= 9 ~ "7–9",
+      SleepHrsNight > 9  ~ ">9",
+      TRUE               ~ NA_character_
+    ),
+    
+    AgeGroup = case_when(
+      Age < 40 ~ "18–39",
+      Age < 60 ~ "40–59",
+      TRUE     ~ "60+"
+    ),
+    
+    IncomeGroup = case_when(
+      HHIncomeMid < 25000 ~ "<$25k",
+      HHIncomeMid < 75000 ~ "$25k–75k",
+      HHIncomeMid >= 75000 ~ ">$75k",
+      TRUE                 ~ NA_character_
+    ),
+    
+    Sex  = Gender,
+    Race = Race1
+  )
+```
+
+```{r}
+#save to local file
+saveRDS(nhanes_clean, "nhanes_clean.rds")
+cat("Saved cleaned NHANES data to nhanes_clean.rds\n")
+```
